@@ -6,7 +6,7 @@ using TMPro;
 
 public class TimerX : MonoBehaviour
 {
-    private float countDown = 3;
+    private float countDown = 60f; //Number of seconds
     public TextMeshProUGUI timerText;
     private GameManagerX gameManagerX;
 
@@ -29,7 +29,9 @@ public class TimerX : MonoBehaviour
                 
             }
 
-            timerText.text = "Timer: " + countDown; //timer needs to be readable 
+            float numberSeconds = Mathf.Round(countDown);//Rounding number to show seconds on the GUI
+
+            timerText.text = "Timer: " + numberSeconds; 
 
         }
 
