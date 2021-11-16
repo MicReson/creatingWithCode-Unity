@@ -26,6 +26,7 @@ public class TimerX : MonoBehaviour
             else
             {
                 Debug.Log("Time Out!");
+                gameManagerX.GameOver();
                 
             }
 
