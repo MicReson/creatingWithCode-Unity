@@ -16,6 +16,7 @@ public class PlayerControllerX : MonoBehaviour
     private AudioSource playerAudio;
     public AudioClip moneySound;
     public AudioClip explodeSound;
+    public AudioClip groundBounce;
 
 
     // Start is called before the first frame update
@@ -63,9 +64,18 @@ public class PlayerControllerX : MonoBehaviour
 
         }
 
+        if (gameOver == false)
+        {
+            if (other.gameObject.CompareTag("Ground"))
+            {
+                playerRb.AddForce(Vector3.up * 10, ForceMode.Impulse);
+                playerAudio.PlayOneShot(groundBounce, 0.7f);
+            }
+        }   
+
     }
 
-    void boundryLimits()
+    void boundryLimits() //Player limit in Y axis, pushes the player down
     {
         if (transform.position.y > 14.0f)
         {
