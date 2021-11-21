@@ -14,23 +14,22 @@ public class SpawnManagerX : MonoBehaviour
     public int enemyCount;
     public int waveCount = 1;
 
+    public GameObject player;
 
-    public GameObject player; 
-
-    // Update is called once per frame
     void Update()
     {
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-
+        moreSpeed();
         if (enemyCount == 0)
         {
             SpawnEnemyWave(waveCount);
+            ResetPlayerPosition(); // put player back at start
+            
         }
-
     }
 
     // Generate random spawn position for powerups and enemy balls
-    Vector3 GenerateSpawnPosition ()
+    Vector3 GenerateSpawnPosition()
     {
         float xPos = Random.Range(-spawnRangeX, spawnRangeX);
         float zPos = Random.Range(spawnZMin, spawnZMax);
@@ -49,13 +48,11 @@ public class SpawnManagerX : MonoBehaviour
         }
 
         // Spawn number of enemy balls based on wave number
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < enemiesToSpawn; i++)
         {
             Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
         }
-
         waveCount++;
-        ResetPlayerPosition(); // put player back at start
 
     }
 
@@ -65,7 +62,25 @@ public class SpawnManagerX : MonoBehaviour
         player.transform.position = new Vector3(0, 1, -7);
         player.GetComponent<Rigidbody>().velocity = Vector3.zero;
         player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
+        
     }
+
+    void moreSpeed() //increase the velocity of the enemies
+    {
+        switch (waveCount)
+        {
+            case > 1:
+                enemyPrefab.GetComponent<EnemyX>().speed += 100;
+                break;
+            case 1:
+                enemyPrefab.GetComponent<EnemyX>().speed = 100;
+                break;
+            default:
+                enemyPrefab.GetComponent<EnemyX>().speed = 100;
+                break;
+                    
+        }
+    }
+
 
 }

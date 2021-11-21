@@ -14,7 +14,9 @@ public class PlayerControllerX : MonoBehaviour
 
     private float normalStrength = 10; // how hard to hit enemy without powerup
     private float powerupStrength = 25; // how hard to hit enemy with powerup
-    
+    public float speedVelocity;
+    public ParticleSystem dustParticles;
+
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
@@ -29,6 +31,8 @@ public class PlayerControllerX : MonoBehaviour
 
         // Set powerup indicator position to beneath player
         powerupIndicator.transform.position = transform.position + new Vector3(0, -0.6f, 0);
+
+        superSpeed();
 
     }
 
@@ -74,6 +78,18 @@ public class PlayerControllerX : MonoBehaviour
         }
     }
 
+    private void superSpeed()
+    {
+        
+        Vector3 playerPosition = focalPoint.transform.forward;
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            playerRb.AddForce(playerPosition * speedVelocity, ForceMode.Impulse);
+            dustParticles.Play();
+        }
+        
+    }
 
 
 }
